@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>google多點標記</title>
+</head>
+<style>
+    #map{
+        width: 800px;
+        height: 100vw;
+    }
+</style>
+<body>
+    <div id="map"></div>
+
+
+
+
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy5_SjUbRXayyiYVb9QaQSlRUW6CSM5Io"></script>
+    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+
+    <script>
+        const locations = [
+          { lat: 25.053229, lng: 121.546513 },
+          { lat: 25.055329, lng: 121.545452 },
+          { lat: 25.055799, lng: 121.541877 },
+          { lat: 25.055475, lng: 121.538901 },
+          { lat: 25.053250, lng: 121.539674 },
+          { lat: 25.053093, lng: 121.541934 },
+          { lat: 25.053657, lng: 121.542373 },
+          { lat: 25.049395, lng: 121.541750 },
+          { lat: 25.050189, lng: 121.534727 },
+          { lat: 25.053187, lng: 121.534611 },
+          { lat: 25.049416, lng: 121.541784 },
+          { lat: 25.051609, lng: 121.542269 },
+          { lat: 25.050001, lng: 121.545901 },
+          { lat: 25.046981, lng: 121.545705 },
+          { lat: 25.052930, lng: 121.526283 },
+          { lat: 25.053033, lng: 121.524833 },
+          { lat: 25.050434, lng: 121.532497 },
+          { lat: 25.056505, lng: 121.531951 },
+          { lat: 25.053454, lng: 121.546500 }
+        ];
+
+        function initMap(){
+            const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 14,
+            center: { lat: 25.052201, lng: 121.543030 }
+            });
+
+            const info = ["A點", "B點", "我在C點", "D點", "E點", "F點", "G點", "H點", "I點", "J點", "K點", "L點", "M點", "N點", "O點", "P點", "Q點", "R點", "S點"];
+
+            const infowindow = new google.maps.InfoWindow();
+            
+            // 創建標記
+            const markers = locations.map((position, i) => {
+                const info_label = info[i];
+
+                const marker = new google.maps.Marker({
+                position,
+                // label: labels[i]
+                label: `${i + 1}` // 使用數字作為標記的標籤
+                });
+
+                marker.addListener("click", () => {
+                infowindow.setContent(info_label);
+                infowindow.open(map, marker);
+                });
+        
+                return marker;
+
+            });
+
+            // 創建叢集標記
+            const markerCluster = new markerClusterer.MarkerClusterer({ map, markers });
+        }
+
+        // 載入地圖
+        initMap();
+        
+
+
+
+    </script>
+    
+    
+
+
+</body>
+</html>
